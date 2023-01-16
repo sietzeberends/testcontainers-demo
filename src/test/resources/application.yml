@@ -1,0 +1,4 @@
+testcontainers:
+  cassandra:
+    config:
+      location: ${spring.config.location}db/
