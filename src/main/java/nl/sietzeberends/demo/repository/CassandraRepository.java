@@ -14,8 +14,7 @@ public class CassandraRepository {
     cassandraTemplate = new CassandraTemplate(cqlSession);
   }
 
-  public boolean insertEmployee(EmployeeRecordCassandra employeeRecordCassandra) {
+  public void insertEmployee(EmployeeRecordCassandra employeeRecordCassandra) {
     cassandraTemplate.insert(employeeRecordCassandra);
-    return true;
   }
 }

@@ -40,4 +40,10 @@ public class EmployeeRecordCassandra {
   public List<Cert> getCerts() {
     return certs;
   }
+
+  @Override public String toString() {
+    return "Employee in Cassandra: {" + "id='" + id + '\'' + ", firstName='" + firstName + '\''
+        + ", lastName='" + lastName + '\'' + ", alwaysBooksHoursOnTime=" + alwaysBooksHoursOnTime
+        + ", certs=" + certs + '}';
+  }
 }

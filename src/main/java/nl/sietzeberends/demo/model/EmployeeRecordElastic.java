@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.List;
 
-@Document(indexName = "employees", createIndex = true)
+@Document(indexName = "employees")
 public class EmployeeRecordElastic {
   @Field(name = "first-name") private String firstName;
   @Field(name = "last-name") private String lastName;
@@ -53,5 +53,10 @@ public class EmployeeRecordElastic {
 
   public List<Cert> getCerts() {
     return certs;
+  }
+
+  @Override public String toString() {
+    return "Employee in elastic: {" + "firstName='" + firstName + '\'' + ", lastName='" + lastName
+        + '\'' + ", alwaysBooksHoursOnTime=" + alwaysBooksHoursOnTime + ", certs=" + certs + '}';
   }
 }

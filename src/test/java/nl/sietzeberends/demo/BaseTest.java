@@ -4,14 +4,11 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import nl.sietzeberends.demo.model.Cert;
 import nl.sietzeberends.demo.model.EmployeeRecordElastic;
-import nl.sietzeberends.demo.repository.CassandraRepository;
-import nl.sietzeberends.demo.repository.ElasticRepository;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -21,7 +18,6 @@ import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.InternetProtocol;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -80,13 +76,13 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
     private void initializeElastic(ElasticsearchOperations elasticsearchOperations) {
       EmployeeRecordElastic sietze = new EmployeeRecordElastic("Sietze", "Berends", false, List.of(Cert.CKAD, Cert.OCA, Cert.OCP));
-      EmployeeRecordElastic jade = new EmployeeRecordElastic("Jade", "Eloff", true, List.of(Cert.values()));
-      EmployeeRecordElastic wietse = new EmployeeRecordElastic("Wietse", "Smit",true, List.of(Cert.OCA, Cert.OCP, Cert.SPRING));
+      EmployeeRecordElastic tim = new EmployeeRecordElastic("Tim", "McGraw", true, List.of(Cert.values()));
+      EmployeeRecordElastic johnny = new EmployeeRecordElastic("Johnny", "Cash",true, List.of(Cert.OCA, Cert.OCP, Cert.SPRING));
       IndexQueryBuilder builder = new IndexQueryBuilder();
       List<IndexQuery> employeeIndexQueries = new ArrayList<>();
       employeeIndexQueries.add(builder.withIndex("employees").withId(UUID.randomUUID().toString()).withObject(sietze).build());
-      employeeIndexQueries.add(builder.withIndex("employees").withId(UUID.randomUUID().toString()).withObject(jade).build());
-      employeeIndexQueries.add(builder.withIndex("employees").withId(UUID.randomUUID().toString()).withObject(wietse).build());
+      employeeIndexQueries.add(builder.withIndex("employees").withId(UUID.randomUUID().toString()).withObject(tim).build());
+      employeeIndexQueries.add(builder.withIndex("employees").withId(UUID.randomUUID().toString()).withObject(johnny).build());
       elasticsearchOperations.bulkIndex(employeeIndexQueries, IndexCoordinates.of("employees"));
     }
 
